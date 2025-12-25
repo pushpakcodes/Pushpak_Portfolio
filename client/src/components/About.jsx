@@ -109,6 +109,24 @@ const About = () => {
         transition={{ type: "spring", stiffness: 40, damping: 20 }}
         className="absolute bottom-[15%] left-[40%] w-1 h-1 bg-purple-400/30 rounded-full pointer-events-none"
       />
+      
+      {/* High Density Starfield Dots */}
+      <motion.div animate={calculateMovement(-0.03)} transition={{ type: "spring", stiffness: 40 }} className="absolute top-[8%] left-[8%] w-0.5 h-0.5 bg-white/40 rounded-full pointer-events-none" />
+      <motion.div animate={calculateMovement(0.05)} transition={{ type: "spring", stiffness: 50 }} className="absolute top-[12%] right-[12%] w-1 h-1 bg-blue-400/20 rounded-full pointer-events-none" />
+      <motion.div animate={calculateMovement(-0.07)} transition={{ type: "spring", stiffness: 45 }} className="absolute bottom-[8%] left-[8%] w-0.5 h-0.5 bg-purple-400/30 rounded-full pointer-events-none" />
+      <motion.div animate={calculateMovement(0.09)} transition={{ type: "spring", stiffness: 55 }} className="absolute bottom-[12%] right-[25%] w-1 h-1 bg-white/20 rounded-full pointer-events-none" />
+      <motion.div animate={calculateMovement(-0.04)} transition={{ type: "spring", stiffness: 40 }} className="absolute top-[45%] left-[2%] w-0.5 h-0.5 bg-white/30 rounded-full pointer-events-none" />
+      <motion.div animate={calculateMovement(0.06)} transition={{ type: "spring", stiffness: 50 }} className="absolute top-[55%] right-[2%] w-0.5 h-0.5 bg-blue-300/30 rounded-full pointer-events-none" />
+      <motion.div animate={calculateMovement(-0.08)} transition={{ type: "spring", stiffness: 45 }} className="absolute top-[2%] left-[40%] w-1 h-1 bg-purple-300/20 rounded-full pointer-events-none" />
+      <motion.div animate={calculateMovement(0.11)} transition={{ type: "spring", stiffness: 60 }} className="absolute bottom-[2%] right-[40%] w-0.5 h-0.5 bg-white/40 rounded-full pointer-events-none" />
+      <motion.div animate={calculateMovement(-0.05)} transition={{ type: "spring", stiffness: 40 }} className="absolute top-[25%] left-[15%] w-0.5 h-0.5 bg-blue-200/30 rounded-full pointer-events-none" />
+      <motion.div animate={calculateMovement(0.07)} transition={{ type: "spring", stiffness: 50 }} className="absolute top-[75%] right-[15%] w-1 h-1 bg-purple-200/20 rounded-full pointer-events-none" />
+      <motion.div animate={calculateMovement(-0.09)} transition={{ type: "spring", stiffness: 45 }} className="absolute top-[35%] left-[85%] w-0.5 h-0.5 bg-white/30 rounded-full pointer-events-none" />
+      <motion.div animate={calculateMovement(0.13)} transition={{ type: "spring", stiffness: 55 }} className="absolute bottom-[35%] left-[5%] w-1 h-1 bg-blue-400/20 rounded-full pointer-events-none" />
+      <motion.div animate={calculateMovement(-0.06)} transition={{ type: "spring", stiffness: 40 }} className="absolute top-[18%] right-[30%] w-0.5 h-0.5 bg-white/20 rounded-full pointer-events-none" />
+      <motion.div animate={calculateMovement(0.08)} transition={{ type: "spring", stiffness: 50 }} className="absolute bottom-[18%] left-[30%] w-0.5 h-0.5 bg-purple-300/30 rounded-full pointer-events-none" />
+      <motion.div animate={calculateMovement(-0.1)} transition={{ type: "spring", stiffness: 45 }} className="absolute top-[65%] left-[65%] w-1 h-1 bg-white/10 rounded-full pointer-events-none" />
+
 
       {/* Floating Astronaut */}
       <motion.div

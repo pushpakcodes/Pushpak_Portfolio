@@ -5,6 +5,7 @@ import Hero from './components/Hero';
 import BentoGrid from './components/BentoGrid';
 import CursorFollower from './components/CursorFollower';
 import About from './components/About';
+import Projects from './components/Projects';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             </>
           } />
           <Route path="/about" element={<About />} />
+          <Route path="/projects" element={<Projects />} />
         </Routes>
       </div>
     </Router>

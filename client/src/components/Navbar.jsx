@@ -5,6 +5,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
+  const isArtPage = currentPath === '/art';
 
   const isActive = (path) => currentPath === path;
 
@@ -12,12 +13,17 @@ const Navbar = () => {
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Projects', path: '/projects' },
+    { name: 'Art', path: '/art' },
     { name: 'Contact', path: '/contact' },
   ];
 
   return (
     <nav className="fixed top-8 left-1/2 -translate-x-1/2 z-50">
-      <div className="flex items-center gap-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-full p-1.5 px-3 shadow-lg shadow-black/20">
+      <div className={`flex items-center gap-2 backdrop-blur-md border rounded-full p-1.5 px-3 shadow-lg ${
+        isArtPage 
+          ? 'bg-black/5 border-black/10 shadow-black/5' 
+          : 'bg-white/5 border-white/10 shadow-black/20'
+      }`}>
         {navItems.map((item) => (
           <div 
             key={item.name}
@@ -25,8 +31,12 @@ const Navbar = () => {
             className={`
               px-5 py-2.5 rounded-full cursor-pointer transition-all text-sm font-medium
               ${isActive(item.path) 
-                ? 'bg-white/10 text-white hover:bg-white/20 shadow-[0_0_15px_rgba(255,255,255,0.5)]' 
-                : 'text-gray-400 hover:text-white'
+                ? isArtPage
+                  ? 'bg-black/10 text-black hover:bg-black/20 shadow-[0_0_15px_rgba(0,0,0,0.1)]'
+                  : 'bg-white/10 text-white hover:bg-white/20 shadow-[0_0_15px_rgba(255,255,255,0.5)]'
+                : isArtPage
+                  ? 'text-gray-500 hover:text-black'
+                  : 'text-gray-400 hover:text-white'
               }
               ${item.name === 'Home' ? 'px-7' : ''}
             `}
@@ -38,7 +48,13 @@ const Navbar = () => {
           href="https://drive.google.com/file/d/1DPxLG1CGsQIVaOvcQWYmJuvKHMBFkjA-/view?usp=drive_link" 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="bg-white/10 hover:bg-white/20 text-white px-6 py-2.5 rounded-full cursor-pointer transition-all text-sm font-medium border border-white/5 ml-2 block"
+          className={`
+            px-6 py-2.5 rounded-full cursor-pointer transition-all text-sm font-medium border ml-2 block
+            ${isArtPage
+              ? 'bg-black/10 hover:bg-black/20 text-black border-black/5'
+              : 'bg-white/10 hover:bg-white/20 text-white border-white/5'
+            }
+          `}
         >
           Resume
         </a>

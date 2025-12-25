@@ -9,6 +9,7 @@ const artItems = [
   { type: 'image', src: '/art/art-4.jpg' },
   { type: 'video', src: '/art/art-5.mp4' },
   { type: 'image', src: '/art/art-6.jpg' },
+  { type: 'video', src: '/art/art-7.mp4' },
   { type: 'video', src: '/art/art-8.mp4' },
   { type: 'image', src: '/art/art-9.jpg' },
   { type: 'video', src: '/art/art-10.mp4' },
@@ -39,10 +40,10 @@ const Art = () => {
 
     window.addEventListener('mousemove', handleMouseMove);
     
-    // Hide banner after 3.5 seconds (giving time for text to read)
+    // Hide banner after 2 seconds (even quicker transition)
     const timer = setTimeout(() => {
       setShowBanner(false);
-    }, 3500);
+    }, 2000);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
@@ -73,17 +74,22 @@ const Art = () => {
     visible: {
       opacity: 1,
       transition: {
-        delay: 0.5,
-        staggerChildren: 0.08,
+        delay: 0.2,
+        staggerChildren: 0.03,
       },
     },
   };
 
   const letter = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 50, filter: "blur(10px)" },
     visible: {
       opacity: 1,
       y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.5,
+        ease: [0.2, 0.65, 0.3, 0.9],
+      }
     },
   };
 
@@ -98,7 +104,7 @@ const Art = () => {
             <motion.div
               initial={{ height: "50%" }}
               exit={{ height: 0 }}
-              transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
+              transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.1 }}
               className="absolute top-0 left-0 w-full bg-[#050505] z-0"
             />
             
@@ -106,7 +112,7 @@ const Art = () => {
             <motion.div
               initial={{ height: "50%" }}
               exit={{ height: 0 }}
-              transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
+              transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.1 }}
               className="absolute bottom-0 left-0 w-full bg-[#050505] z-0"
             />
 
@@ -114,12 +120,12 @@ const Art = () => {
             <motion.div
               initial="hidden"
               animate="visible"
-              exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.5 } }}
+              exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)", transition: { duration: 0.8 } }}
               variants={sentence}
               className="relative z-10 px-4 text-center mix-blend-difference"
             >
-              <h2 className="text-2xl md:text-5xl font-light text-white tracking-wider italic">
-                {"pushpak codes in dark but lives in light".split("").map((char, index) => (
+              <h2 className="text-3xl md:text-6xl font-oregon text-white tracking-widest leading-relaxed">
+                {"Pushpak Codes In Dark But Lives In Light".split("").map((char, index) => (
                   <motion.span key={index} variants={letter}>
                     {char}
                   </motion.span>

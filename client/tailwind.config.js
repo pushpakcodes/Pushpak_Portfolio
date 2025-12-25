@@ -14,6 +14,7 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
+        oregon: ['"Oregon Regular"', 'sans-serif'],
       }
     },
   },

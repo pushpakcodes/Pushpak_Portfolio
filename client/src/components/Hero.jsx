@@ -117,6 +117,22 @@ const Hero = () => {
         transition={{ type: "spring", stiffness: 55, damping: 15 }}
         className="absolute bottom-[10%] right-[40%] w-1 h-1 bg-white/20 rounded-full"
       />
+
+      {/* Scroll Indicator */}
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+      >
+        <div className="w-6 h-10 border-2 border-white/20 rounded-full p-1">
+          <motion.div 
+            animate={{ y: [0, 12, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+            className="w-1.5 h-1.5 bg-white rounded-full mx-auto"
+          />
+        </div>
+      </motion.div>
     </div>
   );
 };

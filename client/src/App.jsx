@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import BentoGrid from './components/BentoGrid';
 import CursorFollower from './components/CursorFollower';
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
       <CursorFollower />
       <Navbar />
       <Hero />
+      <BentoGrid />
     </div>
   );
 }

@@ -34,9 +34,14 @@ const Navbar = () => {
             {item.name}
           </div>
         ))}
-        <div className="bg-white/10 hover:bg-white/20 text-white px-6 py-2.5 rounded-full cursor-pointer transition-all text-sm font-medium border border-white/5 ml-2">
-          Book a Call
-        </div>
+        <a 
+          href="https://drive.google.com/file/d/1DPxLG1CGsQIVaOvcQWYmJuvKHMBFkjA-/view?usp=drive_link" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="bg-white/10 hover:bg-white/20 text-white px-6 py-2.5 rounded-full cursor-pointer transition-all text-sm font-medium border border-white/5 ml-2 block"
+        >
+          Resume
+        </a>
       </div>
     </nav>
   );

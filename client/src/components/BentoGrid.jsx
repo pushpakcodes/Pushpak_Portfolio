@@ -70,7 +70,7 @@ const BentoGrid = () => {
               <div className="flex flex-col gap-4 w-full max-w-[320px] z-10 relative">
                 <div className="bg-[#0a0a0a]/30 backdrop-blur-md border border-white/10 px-4 py-3 rounded-xl flex items-center justify-center gap-3 cursor-pointer hover:bg-[#0a0a0a]/50 transition-colors group/copy w-full">
                   <Mail className="w-4 h-4 text-purple-300" />
-                  <span className="text-sm font-medium text-purple-100">pushpakzowrkspace@gmail.com</span>
+                  <span className="text-sm font-medium text-purple-100">pushpakzworkspace@gmail.com</span>
                   <Copy className="w-4 h-4 text-purple-300 opacity-0 group-hover/copy:opacity-100 transition-opacity absolute right-4" />
                 </div>
 

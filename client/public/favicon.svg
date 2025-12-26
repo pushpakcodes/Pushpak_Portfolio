@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="purpleGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#6d28d9"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0a0a0a"/>
+  <!-- Head -->
+  <circle cx="22" cy="18" r="10" fill="url(#purpleGrad)"/>
+  <!-- Body (rounded semi-circle) -->
+  <path d="M10 48 A22 22 0 0 1 32 26 H10 Z" fill="url(#purpleGrad)"/>
+  <!-- Magnifying glass -->
+  <circle cx="44" cy="40" r="10" fill="none" stroke="url(#purpleGrad)" stroke-width="6"/>
+  <line x1="50" y1="46" x2="58" y2="54" stroke="url(#purpleGrad)" stroke-width="6" stroke-linecap="round"/>
+</svg>

@@ -7,7 +7,7 @@ import Globe from './Globe';
 const BentoGrid = () => {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen bg-[#050505] text-white p-4 md:p-8 pt-20">
+    <div id="home-work" className="min-h-screen bg-[#050505] text-white p-4 md:p-8 pt-20">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
         
         {/* Left Column Group (Spans 2 columns) */}

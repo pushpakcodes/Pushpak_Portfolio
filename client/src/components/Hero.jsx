@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -56,12 +58,11 @@ const Hero = () => {
           <br className="hidden md:block" /> based in India with a passion for code.
         </p>
 
-        {/* CTA Button */}
-        <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[2px] focus:outline-none group hover:scale-105 transition-transform duration-300">
-          {/* Continuous Purple Shiny Line Animation */}
+        <button
+          onClick={() => navigate('/projects')}
+          className="relative inline-flex h-12 overflow-hidden rounded-full p-[2px] focus:outline-none group hover:scale-105 transition-transform duration-300"
+        >
           <span className="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#581c87_0%,#a855f7_50%,#581c87_100%)]" />
-          
-          {/* Inner Content (The Black Button) */}
           <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-[#0a0a0a] px-8 text-sm font-medium text-white backdrop-blur-3xl gap-2">
             <span className="relative font-medium text-base z-10">Show my work</span>
             <ArrowRight className="w-4 h-4 relative group-hover:translate-x-1 transition-transform duration-300 text-gray-300 z-10" />
@@ -118,20 +119,25 @@ const Hero = () => {
         className="absolute bottom-[10%] right-[40%] w-1 h-1 bg-white/20 rounded-full"
       />
 
-      {/* Scroll Indicator */}
       <motion.div 
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 1 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <div className="w-6 h-10 border-2 border-white/20 rounded-full p-1">
+        <div
+          onClick={() => document.getElementById('home-work')?.scrollIntoView({ behavior: 'smooth' })}
+          className="w-6 h-10 border-2 border-white/20 rounded-full p-1 cursor-pointer"
+          role="button"
+          aria-label="Scroll down"
+        >
           <motion.div 
             animate={{ y: [0, 12, 0] }}
             transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
             className="w-1.5 h-1.5 bg-white rounded-full mx-auto"
           />
         </div>
+        <span className="text-xs text-gray-400">Click to scroll</span>
       </motion.div>
     </div>
   );

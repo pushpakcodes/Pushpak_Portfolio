@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, Send } from 'lucide-react';
 import { FaLinkedinIn, FaGithub } from 'react-icons/fa';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -36,15 +37,28 @@ const Contact = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('http://localhost:5000/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_wzsablt';
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_c11vynr';
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'gnyhMG4SnZEZY0-95';
 
-      if (response.ok) {
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error('Email service not configured');
+      }
+
+      const res = await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: formData.name,
+          user_name: formData.name,
+          reply_to: formData.email,
+          user_email: formData.email,
+          message: formData.message
+        },
+        { publicKey }
+      );
+
+      if (res.status === 200) {
         setIsSubmitted(true);
         setFormData({ name: '', email: '', message: '' });
       } else {

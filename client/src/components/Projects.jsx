@@ -93,7 +93,7 @@ const Projects = () => {
       title: "SheetPilot – Cursor for Excel",
       description: "SheetPilot is an AI-powered web platform that automates Excel workflows using natural language. Users generate formulas, pivots, and analytics without manual spreadsheets. LLM-driven orchestration powers a fast, AI-first productivity experience.",
       tags: ["MERN", "LangChain", "ExcelJS", "JWT", "REST APIs", "LLM Integration", "Framer Motion"],
-      link: "#",
+      link: "https://github.com/pushpakcodes/Sheetpilot",
       image: "/project looks/sheetpilot.png"
     },
     {
@@ -107,28 +107,28 @@ const Projects = () => {
       title: "MindEase – OCD Tracker & AI Companion",
       description: "MindEase is a privacy-first web app for OCD awareness and self-reflection. It features dashboards, journaling, ERP tools, and pattern tracking. An AI companion offers supportive, non-clinical guidance and insights.",
       tags: ["React", "Node.js", "Expressjs", "MongoDB", "Mongoose", "JWT", "OpenAI API", "Framer Motion"],
-      link: "#",
+      link: "https://mind-ease-ocd-tracker-and-ai-compan.vercel.app/",
       image: "/project looks/mindease.png"
     },
     {
       title: "Real-Time Banking & Investment Simulator",
       description: "A real-time finance simulator replicating banking and investment workflows. Users deposit funds, invest, take loans, and track outcomes via live dashboards. Built with secure transaction logic and analytics-driven visualizations.",
       tags: ["MERN", "Node.js", "Express", "MongoDB", "JWT", "React Dashboards"],
-      link: "#",
+      link: "https://real-time-real-life-banking-and-investment-simulator.vercel.app/",
       image: "/project looks/financialsimulator.png"
     },
     {
       title: "Mrugakshi Portfolio (Freelance Project)",
       description: "A custom portfolio website built for a Bollywood Art Director. Focused on showcasing artistic work through smooth animations and elegant layouts. Delivered end-to-end as a freelance project with design, development, and deployment.",
       tags: ["React", "Tailwind CSS", "Framer Motion", "Git", "Vercel"],
-      link: "#",
+      link: "https://mrugakshi.com/",
       image: "/project looks/mrugakshi.png"
     },
     {
       title: "ChefKiss",
       description: "ChefKiss allows users to discover chefs and support them via secure Stripe payments. It features chef profiles, tipping history, leaderboards, and dashboards. A built-in social feed enables chefs to share culinary posts and updates.",
       tags: ["MERN", "Stripe", "Tailwind CSS"], // Inferred from description/context
-      link: "#",
+      link: "https://chefs-kiss-platform.vercel.app/",
       image: "/project looks/chefskiss.png"
     }
   ];

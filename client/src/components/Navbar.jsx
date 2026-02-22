@@ -45,7 +45,7 @@ const Navbar = () => {
           </div>
         ))}
         <a 
-          href="https://drive.google.com/file/d/1DPxLG1CGsQIVaOvcQWYmJuvKHMBFkjA-/view?usp=drive_link" 
+          href="https://drive.google.com/file/d/1vfVn_JF-9W21WvTtZbaDnjMdD_eq_TLs/view" 
           target="_blank" 
           rel="noopener noreferrer" 
           className={`

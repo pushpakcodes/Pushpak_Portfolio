@@ -184,10 +184,10 @@ const About = () => {
               I’ve built end-to-end applications ranging from HR management systems to AI-powered Excel automation tools, handling backend architecture, APIs, frontend UX, and deployment. I’ve also designed and developed a portfolio website for Bollywood Art Director Mrugakshi Nadkarni.
             </p>
             <p>
-              I find inspiration where art meets nature — from Van Gogh’s skies to quiet, living landscapes. Creating, like coding, helps me understand the world with patience and curiosity. Nature truly is the greatest creator.
+              I find inspiration where art meets nature from Van Gogh’s skies to quiet, living landscapes. Creating, like coding, helps me understand the world with patience and curiosity. Nature truly is the greatest creator.
             </p>
             <p className="text-white font-medium pt-2 text-lg">
-              Let's connect — who knows what we can build together!
+              Let's connect, who knows what we can build together!
             </p>
 
             {/* Social Icons */}

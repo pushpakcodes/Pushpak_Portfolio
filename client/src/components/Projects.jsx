@@ -76,7 +76,9 @@ const Projects = () => {
       'Stripe': { icon: FaStripe, color: '#635BFF' },
       'Git': { icon: FaGitAlt, color: '#F05032' },
       'Vercel': { icon: SiVercel, color: '#FFFFFF' },
-      'React Dashboards': { icon: FaReact, color: '#61DAFB' }
+      'React Dashboards': { icon: FaReact, color: '#61DAFB' },
+      'Python': { icon: FaPython, color: '#3776AB' },
+      'Groq API': { icon: FaBrain, color: '#F0F0F0' }
     };
 
     // Normalize tech string to match keys
@@ -125,11 +127,11 @@ const Projects = () => {
       image: "/project looks/mrugakshi.png"
     },
     {
-      title: "ChefKiss",
-      description: "ChefKiss allows users to discover chefs and support them via secure Stripe payments. It features chef profiles, tipping history, leaderboards, and dashboards. A built-in social feed enables chefs to share culinary posts and updates.",
-      tags: ["MERN", "Stripe", "Tailwind CSS"], // Inferred from description/context
-      link: "https://chefs-kiss-platform.vercel.app/",
-      image: "/project looks/chefskiss.png"
+      title: "Mocktail Master",
+      description: "An IoT web platform for ordering custom mocktails. Features React/Node.js architecture with Groq API for AI drink suggestions, and Raspberry Pi integration using Python to control pumps and relays.",
+      tags: ["React", "Node.js", "Express", "MongoDB", "Groq API", "Python"],
+      link: "https://mocktail-master.vercel.app/",
+      image: "/project looks/Mocktail_Maker.png"
     }
   ];
 

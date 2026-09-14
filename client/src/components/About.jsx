@@ -26,11 +26,11 @@ const About = () => {
   return (
     <div className="h-screen bg-[#050505] text-white overflow-hidden flex flex-col justify-center px-4 md:px-8 relative">
       {/* Background Image */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 pointer-events-none"
         style={{ backgroundImage: 'url("/about-bg.jpg")' }}
       ></div>
-      
+
       {/* Animated Gradient Orbs for depth */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px] mix-blend-screen animate-pulse"></div>
@@ -38,78 +38,78 @@ const About = () => {
       </div>
 
       {/* Parallax Dots (7 Manually Placed Dots) */}
-      <motion.div 
+      <motion.div
         animate={calculateMovement(-0.05)}
         transition={{ type: "spring", stiffness: 50, damping: 20 }}
         className="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full opacity-50 pointer-events-none"
       />
-      <motion.div 
+      <motion.div
         animate={calculateMovement(0.08)}
         transition={{ type: "spring", stiffness: 50, damping: 20 }}
         className="absolute top-1/3 right-1/4 w-1 h-1 bg-purple-500 rounded-full opacity-50 pointer-events-none"
       />
-      <motion.div 
+      <motion.div
         animate={calculateMovement(-0.1)}
         transition={{ type: "spring", stiffness: 50, damping: 20 }}
         className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 bg-blue-500 rounded-full opacity-30 pointer-events-none"
       />
-      <motion.div 
+      <motion.div
         animate={calculateMovement(0.06)}
         transition={{ type: "spring", stiffness: 50, damping: 20 }}
         className="absolute top-1/2 right-[10%] w-1 h-1 bg-white rounded-full opacity-20 pointer-events-none"
       />
-      <motion.div 
+      <motion.div
         animate={calculateMovement(-0.12)}
         transition={{ type: "spring", stiffness: 50, damping: 20 }}
         className="absolute bottom-1/3 right-[20%] w-2 h-2 bg-purple-400/20 rounded-full blur-[1px] pointer-events-none"
       />
-      <motion.div 
+      <motion.div
         animate={calculateMovement(0.15)}
         transition={{ type: "spring", stiffness: 40, damping: 15 }}
         className="absolute top-[15%] right-[35%] w-1 h-1 bg-blue-300/40 rounded-full pointer-events-none"
       />
-      <motion.div 
+      <motion.div
         animate={calculateMovement(-0.08)}
         transition={{ type: "spring", stiffness: 60, damping: 25 }}
         className="absolute bottom-[20%] left-[15%] w-1.5 h-1.5 bg-white/30 rounded-full pointer-events-none"
       />
       {/* Additional Dots */}
-      <motion.div 
+      <motion.div
         animate={calculateMovement(0.12)}
         transition={{ type: "spring", stiffness: 45, damping: 20 }}
         className="absolute top-[10%] left-[50%] w-1 h-1 bg-purple-300/40 rounded-full pointer-events-none"
       />
-      <motion.div 
+      <motion.div
         animate={calculateMovement(-0.15)}
         transition={{ type: "spring", stiffness: 55, damping: 15 }}
         className="absolute top-[80%] right-[45%] w-1 h-1 bg-white/20 rounded-full pointer-events-none"
       />
-      <motion.div 
+      <motion.div
         animate={calculateMovement(0.2)}
         transition={{ type: "spring", stiffness: 40, damping: 20 }}
         className="absolute top-[20%] left-[10%] w-0.5 h-0.5 bg-blue-400/60 rounded-full pointer-events-none"
       />
-      <motion.div 
+      <motion.div
         animate={calculateMovement(-0.18)}
         transition={{ type: "spring", stiffness: 60, damping: 20 }}
         className="absolute bottom-[5%] right-[5%] w-1 h-1 bg-purple-300/40 rounded-full pointer-events-none"
       />
-      <motion.div 
+      <motion.div
         animate={calculateMovement(0.1)}
         transition={{ type: "spring", stiffness: 50, damping: 25 }}
         className="absolute top-[40%] left-[5%] w-1.5 h-1.5 bg-white/10 rounded-full pointer-events-none"
       />
-      <motion.div 
+      <motion.div
         animate={calculateMovement(-0.25)}
         transition={{ type: "spring", stiffness: 70, damping: 15 }}
         className="absolute top-[60%] right-[15%] w-0.5 h-0.5 bg-blue-200/50 rounded-full pointer-events-none"
       />
-      <motion.div 
+      <motion.div
         animate={calculateMovement(0.14)}
         transition={{ type: "spring", stiffness: 40, damping: 20 }}
         className="absolute bottom-[15%] left-[40%] w-1 h-1 bg-purple-400/30 rounded-full pointer-events-none"
       />
-      
+
       {/* High Density Starfield Dots */}
       <motion.div animate={calculateMovement(-0.03)} transition={{ type: "spring", stiffness: 40 }} className="absolute top-[8%] left-[8%] w-0.5 h-0.5 bg-white/40 rounded-full pointer-events-none" />
       <motion.div animate={calculateMovement(0.05)} transition={{ type: "spring", stiffness: 50 }} className="absolute top-[12%] right-[12%] w-1 h-1 bg-blue-400/20 rounded-full pointer-events-none" />
@@ -142,9 +142,9 @@ const About = () => {
         }}
         className="absolute top-[15%] right-[5%] md:right-[10%] w-24 h-24 md:w-32 md:h-32 pointer-events-none z-0 opacity-80"
       >
-        <img 
-          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People%20with%20professions/Man%20Astronaut%20Light%20Skin%20Tone.png" 
-          alt="Floating Astronaut" 
+        <img
+          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People%20with%20professions/Man%20Astronaut%20Light%20Skin%20Tone.png"
+          alt="Floating Astronaut"
           className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]"
         />
       </motion.div>
@@ -154,7 +154,7 @@ const About = () => {
 
       <div className="max-w-7xl mx-auto w-full pt-20 relative z-10">
         {/* Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -171,7 +171,7 @@ const About = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-8 md:gap-16 items-center">
           {/* Text Content */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -208,22 +208,22 @@ const About = () => {
           </motion.div>
 
           {/* Image */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
             className="relative flex justify-center md:justify-end order-first md:order-last mb-4 md:mb-0 md:-translate-y-8"
           >
             <div className="relative w-[200px] h-[200px] md:w-[420px] md:h-[420px] rounded-full overflow-hidden border-4 border-white/5 shadow-2xl bg-[#0a0a0a]">
-              <img 
-                src="/librarypic.jpg" 
-                alt="Pushpak" 
-                className="w-full h-full object-cover scale-110 translate-x-4"
+              <img
+                src="/librarypic.png"
+                alt="Pushpak"
+                className="w-full h-full object-cover scale-110 translate-x-5.5"
               />
               {/* Overlay gradient to match dark theme */}
               <div className="absolute inset-0 bg-purple-900/10 mix-blend-overlay"></div>
             </div>
-            
+
             {/* Background Glow Effect */}
             <div className="absolute inset-0 bg-purple-500/10 blur-[80px] -z-10 rounded-full transform translate-x-10 translate-y-10"></div>
           </motion.div>

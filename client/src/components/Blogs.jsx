@@ -385,7 +385,7 @@ const Blogs = () => {
                        {blog.tags?.slice(0, 2).map((tag, i) => (
                          <span
                            key={i} 
-                           className="px-2 py-0.5 rounded-md bg-[#F4F0E8] border border-[#DCD5CB] text-[10px] font-sans text-stone-800 font-semibold truncate max-w-[75px]"
+                           className="px-2 py-0.5 rounded-md bg-[#F4F0E8] border border-[#DCD5CB] text-[10px] font-sans text-stone-800 font-semibold"
                          >
                            {tag}
                          </span>

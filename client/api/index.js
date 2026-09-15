@@ -218,6 +218,38 @@ app.delete('/api/blogs/:id', verifyAdmin, async (req, res) => {
   }
 });
 
+// Debug endpoint - check MongoDB connection status
+app.get('/api/debug', async (req, res) => {
+  const hasMongoUri = !!process.env.MONGO_URI;
+  const mongoUriPrefix = process.env.MONGO_URI ? process.env.MONGO_URI.substring(0, 30) + '...' : 'NOT SET';
+  const hasAdminSecret = !!process.env.ADMIN_SECRET;
+  const mongooseState = mongoose.connection.readyState;
+  // 0=disconnected, 1=connected, 2=connecting, 3=disconnecting
+  const stateNames = { 0: 'disconnected', 1: 'connected', 2: 'connecting', 3: 'disconnecting' };
+
+  let testResult = 'skipped';
+  if (hasMongoUri && !isConnected) {
+    try {
+      await connectDB();
+      testResult = isConnected ? 'connected successfully' : 'failed to connect';
+    } catch (e) {
+      testResult = `error: ${e.message}`;
+    }
+  } else if (isConnected) {
+    testResult = 'already connected';
+  }
+
+  return res.status(200).json({
+    mongoUriSet: hasMongoUri,
+    mongoUriPrefix,
+    adminSecretSet: hasAdminSecret,
+    isConnectedFlag: isConnected,
+    mongooseReadyState: stateNames[mongooseState] || mongooseState,
+    connectionTest: testResult,
+    nodeVersion: process.version
+  });
+});
+
 // Health check
 app.get('/api', (req, res) => res.json({ status: 'ok' }));
 app.get('/', (req, res) => res.json({ status: 'ok' }));

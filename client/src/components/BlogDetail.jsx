@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -6,8 +6,52 @@ import { useNavigate, useParams } from 'react-router-dom';
 const BlogDetail = ({ blogs }) => {
   const navigate = useNavigate();
   const { slug } = useParams();
+  const [blog, setBlog] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const blog = blogs?.find(b => b.slug === slug || b.id === slug);
+  useEffect(() => {
+    // First try to find from props
+    const found = blogs?.find(b => b.slug === slug || b.id === slug || b._id === slug);
+    if (found) {
+      setBlog(found);
+      setLoading(false);
+      return;
+    }
+
+    // If not in props, fetch directly from API
+    const API_BASE = import.meta.env.VITE_API_URL !== undefined
+      ? import.meta.env.VITE_API_URL
+      : (import.meta.env.DEV ? 'http://localhost:5000' : '');
+
+    const fetchBlog = async () => {
+      try {
+        // Try fetching individual blog by slug
+        const res = await fetch(`${API_BASE}/api/blogs/${slug}`);
+        if (res.ok) {
+          const data = await res.json();
+          setBlog(data);
+          setLoading(false);
+          return;
+        }
+
+        // Fallback: fetch all blogs and find by slug
+        const allRes = await fetch(`${API_BASE}/api/blogs`);
+        if (allRes.ok) {
+          const allBlogs = await allRes.json();
+          const match = allBlogs.find(b => b.slug === slug || b.id === slug || b._id === slug);
+          if (match) {
+            setBlog(match);
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching blog:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlog();
+  }, [slug, blogs]);
 
   // Helper to render text with bold syntax (**bold**) formatted cleanly
   const renderFormattedText = (text) => {
@@ -24,6 +68,15 @@ const BlogDetail = ({ blogs }) => {
       return part;
     });
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#FAF7F2] text-[#0F0F0F] flex flex-col items-center justify-center pt-24">
+        <div className="w-8 h-8 border-2 border-stone-300 border-t-black rounded-full animate-spin"></div>
+        <p className="mt-4 text-stone-500 text-sm font-mono">Loading article...</p>
+      </div>
+    );
+  }
 
   if (!blog) {
     return (

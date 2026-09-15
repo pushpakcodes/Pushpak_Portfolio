@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment secrets
+.env
+.env.local
+.env.*
+*.env
+server/.env
+client/.env
+
+# Build & Logs
+dist/
+dist-ssr/
+*.log
+.vercel/
+.DS_Store

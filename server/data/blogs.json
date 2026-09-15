@@ -1,0 +1,66 @@
+[
+  {
+    "id": "1789472692669",
+    "title": "Testing Bold & Thumbnail Features",
+    "slug": "testing-bold-thumbnail-features",
+    "excerpt": "This is a test summary for testing bold text and thumbnail options.",
+    "content": "Here is an intro sentence. **bold text** and this is regular text.",
+    "tags": [
+      "Tech"
+    ],
+    "date": "Sep 15, 2026",
+    "readTime": "4 min read",
+    "coverImage": "/project looks/sheetpilot.png",
+    "createdAt": "2026-09-15T11:44:52.669Z"
+  },
+  {
+    "id": "sheetpilot-cursor-for-excel",
+    "title": "SheetPilot: How I Built Cursor for Excel Using LangChain & LLMs",
+    "slug": "sheetpilot-cursor-for-excel",
+    "excerpt": "Automating spreadsheet workflows using natural language orchestration, LLM function calling, and real-time ExcelJS formula generation.",
+    "content": "Spreadsheets run the corporate world, yet billions of hours are wasted manually constructing complex VLOOKUPs, pivot tables, and data transformations.\n\n### The Problem\nTraditional spreadsheet tools require manual formulas, nested conditionals, and constant manual data cleaning. Non-technical users struggle with complex Excel formulas, while power users waste repetitive time.\n\n### The Architecture\nSheetPilot bridges the gap between natural human intent and deterministic spreadsheet execution:\n1. **Natural Language Parser**: Takes plain text commands like 'Filter rows where revenue > 50k and calculate 15% bonus'.\n2. **LangChain Agent**: Deconstructs the prompt into actionable spreadsheet operations.\n3. **ExcelJS Orchestrator**: Generates clean, formulaic spreadsheet output in real-time.\n\n### Key Takeaways\nCombining modern LLMs with strict schema validation ensures that generated spreadsheets are non-hallucinatory and production-ready.",
+    "tags": [
+      "AI",
+      "LangChain",
+      "Node.js",
+      "React"
+    ],
+    "date": "Sep 10, 2026",
+    "readTime": "5 min read",
+    "coverImage": "/project looks/sheetpilot.png",
+    "createdAt": "2026-09-10T10:00:00.000Z"
+  },
+  {
+    "id": "mastering-competitive-programming",
+    "title": "Mastering Competitive Programming: Lessons from 1867 LeetCode Knight",
+    "slug": "mastering-competitive-programming",
+    "excerpt": "Core data structures, problem-solving strategies, and mental models for mastering algorithmic coding contests and interviews.",
+    "content": "Competitive programming is not just about writing code fast—it is about pattern recognition, memory optimization, and structured problem solving.\n\n### Key Strategies\n- **Master the Fundamentals**: Focus heavily on Graphs (BFS/DFS), Dynamic Programming, Segment Trees, and Disjoint Set Union (DSU).\n- **Time & Space Complexity Instincts**: Always analyze constraints ($N \\le 10^5$ implies $O(N \\log N)$ solution).\n- **Consistent Practice**: Quality over quantity. Analyze missed test cases deeply after every contest.\n\nBuilding algorithmic intuition takes time, but structured practice yields exponential results.",
+    "tags": [
+      "C++",
+      "Algorithms",
+      "Competitive Programming"
+    ],
+    "date": "Aug 28, 2026",
+    "readTime": "7 min read",
+    "coverImage": "/about-bg.jpg",
+    "createdAt": "2026-08-28T10:00:00.000Z"
+  },
+  {
+    "id": "designing-modern-portfolios",
+    "title": "Designing Modern Developer Portfolios with Glassmorphism & Framer Motion",
+    "slug": "designing-modern-portfolios",
+    "excerpt": "A breakdown of 3D tilt effects, parallax starfields, and dark-mode micro-animations for high-impact web applications.",
+    "content": "Your portfolio is your digital storefront. Standard, flat templates fail to capture attention. Here is how modern visual aesthetics elevate user engagement:\n\n### Modern UI Aesthetics\n1. **3D Interactive Cards**: Utilizing CSS `preserve-3d` and Framer Motion hover transforms creates depth.\n2. **Dynamic Glassmorphism**: Combining low-opacity background fills with `backdrop-blur-md` creates an ultra-sleek, premium feel.\n3. **Parallax Starfields**: Floating ambient dots moving relative to mouse position bring pages to life.",
+    "tags": [
+      "React",
+      "Framer Motion",
+      "Tailwind CSS",
+      "UI/UX"
+    ],
+    "date": "Aug 14, 2026",
+    "readTime": "4 min read",
+    "coverImage": "/project looks/mrugakshi.png",
+    "createdAt": "2026-08-14T10:00:00.000Z"
+  }
+]

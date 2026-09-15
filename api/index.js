@@ -38,7 +38,7 @@ const initialBlogs = [
     "title": "Mastering Competitive Programming: Lessons from 1867 LeetCode Knight",
     "slug": "mastering-competitive-programming",
     "excerpt": "Core data structures, problem-solving strategies, and mental models for mastering algorithmic coding contests and interviews.",
-    "content": "Competitive programming is not just about writing code fast—it is about pattern recognition, memory optimization, and structured problem solving.\n\n### Key Strategies\n- **Master the Fundamentals**: Focus heavily on Graphs (BFS/DFS), Dynamic Programming, Segment Trees, and Disjoint Set Union (DSU).\n- **Time & Space Complexity Instincts**: Always analyze constraints ($N \\le 10^5$ implies $O(N \\log N)$ solution).\n- **Consistent Practice**: Quality over quantity. Analyze missed test cases deeply after every contest.\n\nBuilding algorithmic intuition takes time, but structured practice yields exponential results.",
+    "content": "Competitive programming is not just about writing code fast—it is about pattern recognition, memory optimization, and structured problem solving.\n\n### Key Strategies\n- **Master the Fundamentals**: Focus heavily on Graphs (BFS/DFS), Segment Trees, and Disjoint Set Union (DSU).\n- **Time & Space Complexity Instincts**: Always analyze constraints ($N \\le 10^5$ implies $O(N \\log N)$ solution).\n- **Consistent Practice**: Quality over quantity. Analyze missed test cases deeply after every contest.\n\nBuilding algorithmic intuition takes time, but structured practice yields exponential results.",
     "tags": ["C++", "Algorithms", "Competitive Programming"],
     "date": "Aug 28, 2026",
     "readTime": "7 min read",
@@ -74,27 +74,35 @@ const blogSchema = new mongoose.Schema({
 const Blog = mongoose.models.Blog || mongoose.model('Blog', blogSchema);
 
 let isConnected = false;
+
 async function connectDB() {
   if (isConnected || mongoose.connection.readyState === 1) {
     isConnected = true;
-    return;
+    return true;
   }
-  if (process.env.MONGO_URI) {
-    try {
-      await mongoose.connect(process.env.MONGO_URI);
-      isConnected = true;
-      const count = await Blog.countDocuments();
-      if (count === 0 && initialBlogs.length > 0) {
-        await Blog.insertMany(initialBlogs);
-      }
-    } catch (err) {
-      console.error('MongoDB connection error:', err);
-    }
+  if (!process.env.MONGO_URI) {
+    return false;
+  }
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 5000,
+      bufferCommands: false
+    });
+    isConnected = true;
+    return true;
+  } catch (err) {
+    console.error('MongoDB connection error:', err.message);
+    isConnected = false;
+    return false;
   }
 }
 
 app.use(async (req, res, next) => {
-  await connectDB();
+  try {
+    await connectDB();
+  } catch (e) {
+    console.error('DB connect middleware error:', e);
+  }
   next();
 });
 
@@ -106,17 +114,17 @@ const verifyAdmin = (req, res, next) => {
   next();
 };
 
-const blogRouter = express.Router();
-
-blogRouter.post('/verify-pin', (req, res) => {
-  const { pin } = req.body;
+// Handle PIN verification
+const handleVerifyPin = (req, res) => {
+  const { pin } = req.body || {};
   if (pin === ADMIN_SECRET) {
     return res.status(200).json({ success: true, message: 'Admin verified successfully' });
   }
   return res.status(401).json({ success: false, message: 'Invalid Admin Secret Key' });
-});
+};
 
-blogRouter.get('/', async (req, res) => {
+// Handle Get All Blogs
+const handleGetBlogs = async (req, res) => {
   try {
     if (isConnected) {
       const blogs = await Blog.find().sort({ createdAt: -1 });
@@ -125,11 +133,13 @@ blogRouter.get('/', async (req, res) => {
       return res.status(200).json(initialBlogs);
     }
   } catch (error) {
-    res.status(500).json({ message: 'Failed to fetch blogs' });
+    console.error('Error in handleGetBlogs:', error);
+    return res.status(200).json(initialBlogs);
   }
-});
+};
 
-blogRouter.get('/:slug', async (req, res) => {
+// Handle Get Single Blog
+const handleGetBlogBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
     if (isConnected) {
@@ -142,14 +152,16 @@ blogRouter.get('/:slug', async (req, res) => {
       return res.status(200).json(blog);
     }
   } catch (error) {
-    res.status(500).json({ message: 'Failed to fetch blog' });
+    console.error('Error in handleGetBlogBySlug:', error);
+    return res.status(500).json({ message: 'Failed to fetch blog' });
   }
-});
+};
 
-blogRouter.post('/', verifyAdmin, async (req, res) => {
+// Handle Create Blog
+const handleCreateBlog = async (req, res) => {
   try {
     const { title, slug, excerpt, content, tags, date, readTime, coverImage } = req.body;
-    const formattedSlug = (slug || title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    const formattedSlug = (slug || title || 'blog').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
     const formattedDate = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
     const newBlogData = {
@@ -169,15 +181,18 @@ blogRouter.post('/', verifyAdmin, async (req, res) => {
       await newBlog.save();
       return res.status(201).json(newBlog);
     } else {
-      initialBlogs.unshift({ ...newBlogData, id: Date.now().toString() });
-      return res.status(201).json(newBlogData);
+      const blogItem = { ...newBlogData, id: Date.now().toString() };
+      initialBlogs.unshift(blogItem);
+      return res.status(201).json(blogItem);
     }
   } catch (error) {
-    res.status(500).json({ message: 'Failed to create blog post' });
+    console.error('Error creating blog:', error);
+    return res.status(500).json({ message: 'Failed to create blog post' });
   }
-});
+};
 
-blogRouter.put('/:id', verifyAdmin, async (req, res) => {
+// Handle Update Blog
+const handleUpdateBlog = async (req, res) => {
   try {
     const { id } = req.params;
     if (isConnected) {
@@ -191,11 +206,12 @@ blogRouter.put('/:id', verifyAdmin, async (req, res) => {
       return res.status(200).json(initialBlogs[index]);
     }
   } catch (error) {
-    res.status(500).json({ message: 'Failed to update blog post' });
+    return res.status(500).json({ message: 'Failed to update blog post' });
   }
-});
+};
 
-blogRouter.delete('/:id', verifyAdmin, async (req, res) => {
+// Handle Delete Blog
+const handleDeleteBlog = async (req, res) => {
   try {
     const { id } = req.params;
     if (isConnected) {
@@ -207,14 +223,20 @@ blogRouter.delete('/:id', verifyAdmin, async (req, res) => {
       return res.status(200).json({ message: 'Blog post deleted successfully' });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Failed to delete blog post' });
+    return res.status(500).json({ message: 'Failed to delete blog post' });
   }
-});
+};
 
-app.use('/api/blogs', blogRouter);
-app.use('/blogs', blogRouter);
+const router = express.Router();
+router.post('/verify-pin', handleVerifyPin);
+router.get('/', handleGetBlogs);
+router.get('/:slug', handleGetBlogBySlug);
+router.post('/', verifyAdmin, handleCreateBlog);
+router.put('/:id', verifyAdmin, handleUpdateBlog);
+router.delete('/:id', verifyAdmin, handleDeleteBlog);
 
-app.get('/api', (req, res) => res.send('API is running...'));
-app.get('/', (req, res) => res.send('API is running...'));
+app.use('/api/blogs', router);
+app.use('/blogs', router);
+app.use('/', router);
 
 module.exports = app;

@@ -1,6 +1,6 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
+import express from 'express';
+import cors from 'cors';
+import mongoose from 'mongoose';
 
 const app = express();
 const ADMIN_SECRET = process.env.ADMIN_SECRET || 'pushpak123';
@@ -38,7 +38,7 @@ const initialBlogs = [
     "title": "Mastering Competitive Programming: Lessons from 1867 LeetCode Knight",
     "slug": "mastering-competitive-programming",
     "excerpt": "Core data structures, problem-solving strategies, and mental models for mastering algorithmic coding contests and interviews.",
-    "content": "Competitive programming is not just about writing code fast—it is about pattern recognition, memory optimization, and structured problem solving.\n\n### Key Strategies\n- **Master the Fundamentals**: Focus heavily on Graphs (BFS/DFS), Segment Trees, and Disjoint Set Union (DSU).\n- **Time & Space Complexity Instincts**: Always analyze constraints ($N \\le 10^5$ implies $O(N \\log N)$ solution).\n- **Consistent Practice**: Quality over quantity. Analyze missed test cases deeply after every contest.\n\nBuilding algorithmic intuition takes time, but structured practice yields exponential results.",
+    "content": "Competitive programming is not just about writing code fast\u2014it is about pattern recognition, memory optimization, and structured problem solving.\n\n### Key Strategies\n- **Master the Fundamentals**: Focus heavily on Graphs (BFS/DFS), Segment Trees, and Disjoint Set Union (DSU).\n- **Time & Space Complexity Instincts**: Always analyze constraints.\n- **Consistent Practice**: Quality over quantity. Analyze missed test cases deeply after every contest.\n\nBuilding algorithmic intuition takes time, but structured practice yields exponential results.",
     "tags": ["C++", "Algorithms", "Competitive Programming"],
     "date": "Aug 28, 2026",
     "readTime": "7 min read",
@@ -50,7 +50,7 @@ const initialBlogs = [
     "title": "Designing Modern Developer Portfolios with Glassmorphism & Framer Motion",
     "slug": "designing-modern-portfolios",
     "excerpt": "A breakdown of 3D tilt effects, parallax starfields, and dark-mode micro-animations for high-impact web applications.",
-    "content": "Your portfolio is your digital storefront. Standard, flat templates fail to capture attention. Here is how modern visual aesthetics elevate user engagement:\n\n### Modern UI Aesthetics\n1. **3D Interactive Cards**: Utilizing CSS `preserve-3d` and Framer Motion hover transforms creates depth.\n2. **Dynamic Glassmorphism**: Combining low-opacity background fills with `backdrop-blur-md` creates an ultra-sleek, premium feel.\n3. **Parallax Starfields**: Floating ambient dots moving relative to mouse position bring pages to life.",
+    "content": "Your portfolio is your digital storefront. Standard, flat templates fail to capture attention. Here is how modern visual aesthetics elevate user engagement:\n\n### Modern UI Aesthetics\n1. **3D Interactive Cards**: Utilizing CSS preserve-3d and Framer Motion hover transforms creates depth.\n2. **Dynamic Glassmorphism**: Combining low-opacity background fills with backdrop-blur creates an ultra-sleek, premium feel.\n3. **Parallax Starfields**: Floating ambient dots moving relative to mouse position bring pages to life.",
     "tags": ["React", "Framer Motion", "Tailwind CSS", "UI/UX"],
     "date": "Aug 14, 2026",
     "readTime": "4 min read",
@@ -97,11 +97,12 @@ async function connectDB() {
   }
 }
 
+// Connect to DB on every request
 app.use(async (req, res, next) => {
   try {
     await connectDB();
   } catch (e) {
-    console.error('DB connect middleware error:', e);
+    console.error('DB middleware error:', e.message);
   }
   next();
 });
@@ -114,61 +115,59 @@ const verifyAdmin = (req, res, next) => {
   next();
 };
 
-// Handle PIN verification
-const handleVerifyPin = (req, res) => {
+// PIN verification
+app.post('/api/blogs/verify-pin', (req, res) => {
   const { pin } = req.body || {};
   if (pin === ADMIN_SECRET) {
     return res.status(200).json({ success: true, message: 'Admin verified successfully' });
   }
   return res.status(401).json({ success: false, message: 'Invalid Admin Secret Key' });
-};
+});
 
-// Handle Get All Blogs
-const handleGetBlogs = async (req, res) => {
+// GET all blogs
+app.get('/api/blogs', async (req, res) => {
   try {
     if (isConnected) {
       const blogs = await Blog.find().sort({ createdAt: -1 });
       return res.status(200).json(blogs);
-    } else {
-      return res.status(200).json(initialBlogs);
     }
+    return res.status(200).json(initialBlogs);
   } catch (error) {
-    console.error('Error in handleGetBlogs:', error);
+    console.error('Error fetching blogs:', error.message);
     return res.status(200).json(initialBlogs);
   }
-};
+});
 
-// Handle Get Single Blog
-const handleGetBlogBySlug = async (req, res) => {
+// GET single blog
+app.get('/api/blogs/:slug', async (req, res) => {
   try {
     const { slug } = req.params;
     if (isConnected) {
-      const blog = await Blog.findOne({ $or: [{ slug: slug }, { _id: mongoose.isValidObjectId(slug) ? slug : null }] });
-      if (!blog) return res.status(404).json({ message: 'Blog post not found' });
-      return res.status(200).json(blog);
-    } else {
-      const blog = initialBlogs.find(b => b.slug === slug || b.id === slug);
+      const query = mongoose.isValidObjectId(slug)
+        ? { $or: [{ slug }, { _id: slug }] }
+        : { slug };
+      const blog = await Blog.findOne(query);
       if (!blog) return res.status(404).json({ message: 'Blog post not found' });
       return res.status(200).json(blog);
     }
+    const blog = initialBlogs.find(b => b.slug === slug || b.id === slug);
+    if (!blog) return res.status(404).json({ message: 'Blog post not found' });
+    return res.status(200).json(blog);
   } catch (error) {
-    console.error('Error in handleGetBlogBySlug:', error);
+    console.error('Error fetching blog:', error.message);
     return res.status(500).json({ message: 'Failed to fetch blog' });
   }
-};
+});
 
-// Handle Create Blog
-const handleCreateBlog = async (req, res) => {
+// POST create blog
+app.post('/api/blogs', verifyAdmin, async (req, res) => {
   try {
     const { title, slug, excerpt, content, tags, date, readTime, coverImage } = req.body;
     const formattedSlug = (slug || title || 'blog').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
     const formattedDate = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
     const newBlogData = {
-      title,
-      slug: formattedSlug,
-      excerpt,
-      content,
+      title, slug: formattedSlug, excerpt, content,
       tags: tags || [],
       date: date || formattedDate,
       readTime: readTime || '4 min read',
@@ -180,63 +179,47 @@ const handleCreateBlog = async (req, res) => {
       const newBlog = new Blog(newBlogData);
       await newBlog.save();
       return res.status(201).json(newBlog);
-    } else {
-      const blogItem = { ...newBlogData, id: Date.now().toString() };
-      initialBlogs.unshift(blogItem);
-      return res.status(201).json(blogItem);
     }
+    const blogItem = { ...newBlogData, id: Date.now().toString() };
+    return res.status(201).json(blogItem);
   } catch (error) {
-    console.error('Error creating blog:', error);
+    console.error('Error creating blog:', error.message);
     return res.status(500).json({ message: 'Failed to create blog post' });
   }
-};
+});
 
-// Handle Update Blog
-const handleUpdateBlog = async (req, res) => {
+// PUT update blog
+app.put('/api/blogs/:id', verifyAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     if (isConnected) {
       const updatedBlog = await Blog.findByIdAndUpdate(id, req.body, { new: true });
       if (!updatedBlog) return res.status(404).json({ message: 'Blog post not found' });
       return res.status(200).json(updatedBlog);
-    } else {
-      const index = initialBlogs.findIndex(b => b.id === id || b.slug === id);
-      if (index === -1) return res.status(404).json({ message: 'Blog post not found' });
-      initialBlogs[index] = { ...initialBlogs[index], ...req.body };
-      return res.status(200).json(initialBlogs[index]);
     }
+    return res.status(500).json({ message: 'Database not connected' });
   } catch (error) {
     return res.status(500).json({ message: 'Failed to update blog post' });
   }
-};
+});
 
-// Handle Delete Blog
-const handleDeleteBlog = async (req, res) => {
+// DELETE blog
+app.delete('/api/blogs/:id', verifyAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     if (isConnected) {
       const deletedBlog = await Blog.findByIdAndDelete(id);
       if (!deletedBlog) return res.status(404).json({ message: 'Blog post not found' });
       return res.status(200).json({ message: 'Blog post deleted successfully' });
-    } else {
-      const newBlogs = initialBlogs.filter(b => b.id !== id && b.slug !== id && b._id !== id);
-      return res.status(200).json({ message: 'Blog post deleted successfully' });
     }
+    return res.status(500).json({ message: 'Database not connected' });
   } catch (error) {
     return res.status(500).json({ message: 'Failed to delete blog post' });
   }
-};
+});
 
-const router = express.Router();
-router.post('/verify-pin', handleVerifyPin);
-router.get('/', handleGetBlogs);
-router.get('/:slug', handleGetBlogBySlug);
-router.post('/', verifyAdmin, handleCreateBlog);
-router.put('/:id', verifyAdmin, handleUpdateBlog);
-router.delete('/:id', verifyAdmin, handleDeleteBlog);
+// Health check
+app.get('/api', (req, res) => res.json({ status: 'ok' }));
+app.get('/', (req, res) => res.json({ status: 'ok' }));
 
-app.use('/api/blogs', router);
-app.use('/blogs', router);
-app.use('/', router);
-
-module.exports = app;
+export default app;

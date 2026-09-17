@@ -140,6 +140,7 @@ const BlogDetail = ({ blogs }) => {
                 src={blog.coverImage}
                 alt={blog.title}
                 className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
                 onError={(e) => { e.target.src = '/about-bg.jpg'; }}
               />
             </div>
@@ -157,6 +158,7 @@ const BlogDetail = ({ blogs }) => {
                 src={blog.bannerImage}
                 alt={`${blog.title} Banner`}
                 className="w-full h-auto object-cover"
+                referrerPolicy="no-referrer"
                 onError={(e) => { e.target.style.display = 'none'; }}
               />
             </div>
@@ -221,6 +223,7 @@ const BlogDetail = ({ blogs }) => {
                           src={src} 
                           alt={caption}
                           className="w-full h-auto object-cover" 
+                          referrerPolicy="no-referrer"
                           {...props} 
                         />
                       </div>

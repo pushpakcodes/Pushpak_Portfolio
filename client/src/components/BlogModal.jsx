@@ -309,6 +309,7 @@ const BlogModal = ({ isOpen, onClose, onSave, editingBlog, existingLabels = [] }
                     src={formData.coverImage}
                     alt="Thumbnail preview"
                     className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
                     onError={(e) => { e.target.src = '/about-bg.jpg'; }}
                   />
                 </div>

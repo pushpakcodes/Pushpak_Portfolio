@@ -327,9 +327,10 @@ const Blogs = () => {
                 {/* 16:9 Full-Width Thumbnail Banner */}
                 <div className="relative w-full aspect-video overflow-hidden bg-[#F5F2EB]">
                   <img 
-                    src={blog.coverImage || "/about-bg.jpg"} 
-                    alt={blog.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    src={blog.coverImage || '/about-bg.jpg'} 
+                    alt={blog.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    referrerPolicy="no-referrer"
                     onError={(e) => { e.target.src = '/about-bg.jpg'; }}
                   />
                   <div className="absolute inset-0 bg-[#0F0F0F]/5 group-hover:bg-transparent transition-colors"></div>

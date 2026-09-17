@@ -130,7 +130,7 @@ app.get('/api/blogs/:slug', async (req, res) => {
 // POST create blog (Admin Protected)
 app.post('/api/blogs', verifyAdmin, async (req, res) => {
   try {
-    const { title, slug, excerpt, content, tags, date, readTime, coverImage } = req.body;
+    const { title, slug, excerpt, content, tags, date, readTime, coverImage, bannerImage } = req.body;
     
     const formattedSlug = (slug || title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
     const formattedDate = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -145,6 +145,7 @@ app.post('/api/blogs', verifyAdmin, async (req, res) => {
       date: date || formattedDate,
       readTime: readTime || '4 min read',
       coverImage: coverImage || '/about-bg.jpg',
+      bannerImage: bannerImage || '',
       createdAt: new Date().toISOString()
     };
 

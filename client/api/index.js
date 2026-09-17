@@ -69,6 +69,8 @@ const blogSchema = new mongoose.Schema({
   readTime: { type: String },
   coverImage: { type: String },
   bannerImage: { type: String },
+  isPinned: { type: Boolean, default: false },
+  publishDate: { type: Date },
   createdAt: { type: Date, default: Date.now }
 });
 
@@ -129,7 +131,7 @@ app.post('/api/blogs/verify-pin', (req, res) => {
 app.get('/api/blogs', async (req, res) => {
   try {
     if (isConnected) {
-      const blogs = await Blog.find().sort({ createdAt: -1 });
+      const blogs = await Blog.find().sort({ isPinned: -1, publishDate: -1, createdAt: -1 });
       return res.status(200).json(blogs);
     }
     return res.status(200).json(initialBlogs);
@@ -163,17 +165,20 @@ app.get('/api/blogs/:slug', async (req, res) => {
 // POST create blog
 app.post('/api/blogs', verifyAdmin, async (req, res) => {
   try {
-    const { title, slug, excerpt, content, tags, date, readTime, coverImage, bannerImage } = req.body;
+    const { title, slug, excerpt, content, tags, date, readTime, coverImage, bannerImage, isPinned } = req.body;
     const formattedSlug = (slug || title || 'blog').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-    const formattedDate = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const formattedDate = date || new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const parsedPublishDate = new Date(formattedDate);
 
     const newBlogData = {
       title, slug: formattedSlug, excerpt, content,
       tags: tags || [],
-      date: date || formattedDate,
+      date: formattedDate,
       readTime: readTime || '4 min read',
       coverImage: coverImage || '/about-bg.jpg',
       bannerImage: bannerImage || '',
+      isPinned: isPinned || false,
+      publishDate: isNaN(parsedPublishDate) ? new Date() : parsedPublishDate,
       createdAt: new Date()
     };
 
@@ -194,8 +199,18 @@ app.post('/api/blogs', verifyAdmin, async (req, res) => {
 app.put('/api/blogs/:id', verifyAdmin, async (req, res) => {
   try {
     const { id } = req.params;
+    
+    // Auto-update publishDate when updating blog
+    const updateData = { ...req.body };
+    if (updateData.date) {
+      const parsedDate = new Date(updateData.date);
+      if (!isNaN(parsedDate)) {
+        updateData.publishDate = parsedDate;
+      }
+    }
+
     if (isConnected) {
-      const updatedBlog = await Blog.findByIdAndUpdate(id, req.body, { new: true });
+      const updatedBlog = await Blog.findByIdAndUpdate(id, updateData, { new: true });
       if (!updatedBlog) return res.status(404).json({ message: 'Blog post not found' });
       return res.status(200).json(updatedBlog);
     }

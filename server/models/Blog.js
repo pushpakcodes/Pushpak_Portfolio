@@ -10,6 +10,8 @@ const blogSchema = new mongoose.Schema({
   readTime: { type: String },
   coverImage: { type: String },
   bannerImage: { type: String },
+  isPinned: { type: Boolean, default: false },
+  publishDate: { type: Date },
   createdAt: { type: Date, default: Date.now }
 });
 

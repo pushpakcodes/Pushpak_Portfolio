@@ -95,7 +95,7 @@ app.post('/api/blogs/verify-pin', (req, res) => {
 app.get('/api/blogs', async (req, res) => {
   try {
     if (isMongoConnected) {
-      const blogs = await Blog.find().sort({ createdAt: -1 });
+      const blogs = await Blog.find().sort({ isPinned: -1, publishDate: -1, createdAt: -1 });
       return res.status(200).json(blogs);
     } else {
       const blogs = readBlogsFromFile();
@@ -130,10 +130,11 @@ app.get('/api/blogs/:slug', async (req, res) => {
 // POST create blog (Admin Protected)
 app.post('/api/blogs', verifyAdmin, async (req, res) => {
   try {
-    const { title, slug, excerpt, content, tags, date, readTime, coverImage, bannerImage } = req.body;
+    const { title, slug, excerpt, content, tags, date, readTime, coverImage, bannerImage, isPinned } = req.body;
     
     const formattedSlug = (slug || title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-    const formattedDate = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const formattedDate = date || new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const parsedPublishDate = new Date(formattedDate);
 
     const newBlogData = {
       id: Date.now().toString(),
@@ -142,10 +143,12 @@ app.post('/api/blogs', verifyAdmin, async (req, res) => {
       excerpt,
       content,
       tags: tags || [],
-      date: date || formattedDate,
+      date: formattedDate,
       readTime: readTime || '4 min read',
       coverImage: coverImage || '/about-bg.jpg',
       bannerImage: bannerImage || '',
+      isPinned: isPinned || false,
+      publishDate: isNaN(parsedPublishDate) ? new Date() : parsedPublishDate,
       createdAt: new Date().toISOString()
     };
 
@@ -169,7 +172,15 @@ app.post('/api/blogs', verifyAdmin, async (req, res) => {
 app.put('/api/blogs/:id', verifyAdmin, async (req, res) => {
   try {
     const { id } = req.params;
-    const updateData = req.body;
+    const updateData = { ...req.body };
+    
+    // Auto-update publishDate when updating blog
+    if (updateData.date) {
+      const parsedDate = new Date(updateData.date);
+      if (!isNaN(parsedDate)) {
+        updateData.publishDate = parsedDate;
+      }
+    }
 
     if (isMongoConnected) {
       const updatedBlog = await Blog.findByIdAndUpdate(id, updateData, { new: true });

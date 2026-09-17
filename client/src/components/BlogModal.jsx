@@ -13,7 +13,8 @@ const BlogModal = ({ isOpen, onClose, onSave, editingBlog, existingLabels = [] }
     content: '',
     tags: '',
     coverImage: '',
-    bannerImage: ''
+    bannerImage: '',
+    isPinned: false
   });
 
   const contentTextAreaRef = useRef(null);
@@ -37,7 +38,8 @@ const BlogModal = ({ isOpen, onClose, onSave, editingBlog, existingLabels = [] }
         content: editingBlog.content || '',
         tags: Array.isArray(editingBlog.tags) ? editingBlog.tags.join(', ') : editingBlog.tags || '',
         coverImage: editingBlog.coverImage || '',
-        bannerImage: editingBlog.bannerImage || ''
+        bannerImage: editingBlog.bannerImage || '',
+        isPinned: editingBlog.isPinned || false
       });
     } else {
       setFormData({
@@ -48,7 +50,8 @@ const BlogModal = ({ isOpen, onClose, onSave, editingBlog, existingLabels = [] }
         content: '',
         tags: '',
         coverImage: '',
-        bannerImage: ''
+        bannerImage: '',
+        isPinned: false
       });
     }
   }, [editingBlog, isOpen]);
@@ -56,16 +59,18 @@ const BlogModal = ({ isOpen, onClose, onSave, editingBlog, existingLabels = [] }
   if (!isOpen) return null;
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
+    const finalValue = type === 'checkbox' ? checked : value;
+    
     if (name === 'title') {
-      const autoSlug = value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+      const autoSlug = finalValue.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
       setFormData(prev => ({
         ...prev,
         title: value,
         slug: autoSlug
       }));
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      setFormData(prev => ({ ...prev, [name]: finalValue }));
     }
   };
 
@@ -198,9 +203,27 @@ const BlogModal = ({ isOpen, onClose, onSave, editingBlog, existingLabels = [] }
                 onChange={handleChange}
                 placeholder="e.g. Sep 15, 2026"
                 required
-                className="w-full bg-[#FFFFFF] border border-[#E5DFD5] rounded-xl px-4 py-2.5 text-sm text-[#0F0F0F] placeholder-stone-400 focus:outline-none focus:border-black transition-all shadow-sm font-sans"
+                className="w-full bg-[#FFFFFF] border border-[#E5DFD5] rounded-xl px-4 h-11 text-sm text-[#0F0F0F] placeholder-stone-400 focus:outline-none focus:border-black transition-all shadow-sm font-sans"
               />
             </div>
+          </div>
+
+          {/* Pin to Top Checkbox */}
+          <div className="flex items-center gap-3 bg-[#FFFFFF] border border-[#E5DFD5] rounded-xl p-3 shadow-sm">
+            <input
+              type="checkbox"
+              id="isPinned"
+              name="isPinned"
+              checked={formData.isPinned}
+              onChange={handleChange}
+              className="w-4 h-4 text-black border-stone-300 rounded focus:ring-black cursor-pointer"
+            />
+            <label htmlFor="isPinned" className="text-sm font-semibold text-[#0F0F0F] cursor-pointer select-none">
+              Pin to Top of Blog List
+            </label>
+            <span className="text-xs text-stone-500 ml-auto hidden sm:block">
+              Pinned blogs will always appear before newer blogs.
+            </span>
           </div>
 
           {/* Label Selection Dropdown & Suggestions Section */}

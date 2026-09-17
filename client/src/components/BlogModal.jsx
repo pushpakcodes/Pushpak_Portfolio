@@ -361,7 +361,7 @@ const BlogModal = ({ isOpen, onClose, onSave, editingBlog, existingLabels = [] }
               value={formData.content}
               onChange={handleChange}
               rows={6}
-              placeholder="Write your article content here. Highlight any text and click 'Bold' above to format bold text..."
+              placeholder="Write your article in full Markdown! Use # for headers, ``` for code blocks, > for quotes, and ![left | Caption](URL) for images..."
               required
               className="w-full bg-[#FFFFFF] border border-[#E5DFD5] rounded-xl px-4 py-3 text-sm text-[#0F0F0F] placeholder-stone-400 focus:outline-none focus:border-black transition-all shadow-sm font-sans leading-relaxed"
             />

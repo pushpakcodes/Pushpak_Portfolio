@@ -12,7 +12,8 @@ const BlogModal = ({ isOpen, onClose, onSave, editingBlog, existingLabels = [] }
     excerpt: '',
     content: '',
     tags: '',
-    coverImage: ''
+    coverImage: '',
+    bannerImage: ''
   });
 
   const contentTextAreaRef = useRef(null);
@@ -35,7 +36,8 @@ const BlogModal = ({ isOpen, onClose, onSave, editingBlog, existingLabels = [] }
         excerpt: editingBlog.excerpt || '',
         content: editingBlog.content || '',
         tags: Array.isArray(editingBlog.tags) ? editingBlog.tags.join(', ') : editingBlog.tags || '',
-        coverImage: editingBlog.coverImage || ''
+        coverImage: editingBlog.coverImage || '',
+        bannerImage: editingBlog.bannerImage || ''
       });
     } else {
       setFormData({
@@ -45,7 +47,8 @@ const BlogModal = ({ isOpen, onClose, onSave, editingBlog, existingLabels = [] }
         excerpt: '',
         content: '',
         tags: '',
-        coverImage: ''
+        coverImage: '',
+        bannerImage: ''
       });
     }
   }, [editingBlog, isOpen]);
@@ -126,12 +129,12 @@ const BlogModal = ({ isOpen, onClose, onSave, editingBlog, existingLabels = [] }
     : [];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm">
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
-        className="bg-[#FAF7F2] border border-[#E5DFD5] rounded-3xl p-6 md:p-8 max-w-2xl w-full relative shadow-2xl my-8 text-[#0F0F0F]"
+        className="bg-[#FAF7F2] border border-[#E5DFD5] rounded-3xl p-6 md:p-8 max-w-2xl w-full relative shadow-2xl my-8 text-[#0F0F0F] max-h-[90vh] overflow-y-auto custom-scrollbar"
       >
         <button
           onClick={onClose}
@@ -250,11 +253,10 @@ const BlogModal = ({ isOpen, onClose, onSave, editingBlog, existingLabels = [] }
                         type="button"
                         key={label}
                         onClick={() => handleAddExistingTag(label)}
-                        className={`px-2.5 py-1 text-[11px] font-sans rounded-md transition-all border ${
-                          isSelected
+                        className={`px-2.5 py-1 text-[11px] font-sans rounded-md transition-all border ${isSelected
                             ? 'bg-black text-white border-black font-semibold shadow-sm'
                             : 'bg-[#FFFFFF] text-stone-800 border-[#E5DFD5] hover:border-black/40'
-                        }`}
+                          }`}
                       >
                         {label} {isSelected ? '✓' : '+'}
                       </button>
@@ -331,6 +333,23 @@ const BlogModal = ({ isOpen, onClose, onSave, editingBlog, existingLabels = [] }
               required
               className="w-full bg-[#FFFFFF] border border-[#E5DFD5] rounded-xl px-4 py-2.5 text-sm text-[#0F0F0F] placeholder-stone-400 focus:outline-none focus:border-black transition-all shadow-sm resize-none"
             />
+          </div>
+
+          <div>
+            <label className="block text-xs font-mono uppercase tracking-wider text-stone-600 font-semibold mb-1.5">
+              Banner Image URL (Optional)
+            </label>
+            <div className="relative flex-1">
+              <Image className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+              <input
+                type="text"
+                name="bannerImage"
+                value={formData.bannerImage}
+                onChange={handleChange}
+                placeholder="Optional banner image below summary (e.g. https://...)"
+                className="w-full bg-[#FFFFFF] border border-[#E5DFD5] rounded-xl pl-9 pr-4 py-2.5 text-sm text-[#0F0F0F] placeholder-stone-400 focus:outline-none focus:border-black transition-all shadow-sm"
+              />
+            </div>
           </div>
 
           {/* Blog Content Section with Bold Formatting Toolbar */}

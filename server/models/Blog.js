@@ -9,6 +9,7 @@ const blogSchema = new mongoose.Schema({
   date: { type: String },
   readTime: { type: String },
   coverImage: { type: String },
+  bannerImage: { type: String },
   createdAt: { type: Date, default: Date.now }
 });
 

@@ -150,6 +150,18 @@ const BlogDetail = ({ blogs }) => {
             "{blog.excerpt}"
           </div>
 
+          {/* Banner Image View */}
+          {blog.bannerImage && (
+            <div className="w-full rounded-2xl overflow-hidden border border-[#E2DCD0] mb-8 bg-[#F5F2EB] shadow-md clear-both">
+              <img
+                src={blog.bannerImage}
+                alt={`${blog.title} Banner`}
+                className="w-full h-auto object-cover"
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+            </div>
+          )}
+
           {/* Article Body Content (Markdown) */}
           <div className="prose max-w-none text-stone-800 text-base leading-relaxed space-y-6 font-sans clear-both">
             <ReactMarkdown
